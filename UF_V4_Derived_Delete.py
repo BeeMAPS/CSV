@@ -67,13 +67,14 @@ def QAQC(rowcaptureList):
         if "Interact" in Devicesplit:
             Interact = "Yes"
         ObservationComments_Final = row.split('?')[15]
+        if ObservationComments_Final == "null":
+            #print "null found"
+            Delete = 'Yes'
         filename_Final = row.split('?')[16]
         pinID_Date_List = []
         trackID = 0
         pinID_DateDic = {}
         lastDate = 'Mon Dec 11 12:12:12'
-
-    #for row in rowcaptureList:
         Delete = 'No'
         ObservationPeriod_Final = row.split('?')[0]
         ObservationTimeStamp_Final = row.split('?')[1]
@@ -101,17 +102,6 @@ def QAQC(rowcaptureList):
             if int(timedif) <= 5:
                 Delete = "Yes"
         lastPin = PinID_Final
-
-        # pinID_Date_List.sort(key=keySort)
-        # print pinID_Date_List
-        # pinID = pin.split("?")[0]
-        # ObservationDate = pin.split("?")[1]
-        # # print ObservationDate
-        # #d
-        # PinID = PinID_Final
-        # #print ObservationDate
-        # pinID_Date_List.append('{0}?{1}?{2}'.format(PinID, ObservationDate, trackID))
-        # trackID += 1
         my_dict = {"ObservationPeriod": ObservationPeriod_Final, "ObservationTimestamp": ObservationTimeStamp_Final,
                    "PinID": PinID_Final, "PinType": PinType_Final, "X": Xrow_Final, "Y": Yrow_Final,
                    "ActorType": ActorType_Final, "ActorTypeOther": ActorTypeOther_Final,
@@ -123,12 +113,13 @@ def QAQC(rowcaptureList):
                    "EatDrink": EatDrink, "ScreenShare": ScreenShare, "Headphones": Headphone, "WhiteBoard": WhiteBoard,
                    "Printmat": Printmat, "IndividualDevice": Ind_Device, "TimeofDay": TimeofDay,
                    "Weekend": Weekend, "Delete": Delete, "Interact": Interact}  # Derived fields based on Devices
-        #print my_dict
+
         writelines(my_dict, rowcount)
+        print "current row being analyzed: " + str(rowcount)
+        print "Current row value below"
+        print my_dict
         rowcount += 1
-        print rowcount
-        print "current pin:" + PinID_Final
-        print "last pin: " + lastPin
+
 
 
 def checkcsvforheaders(csvdirectory):
