@@ -137,9 +137,11 @@ def QAQC(rowcaptureList):
         Interactions_Final = row.split('?')[9]
         ObservationPeriodComments_Final = row.split('?')[10]
         ObservationID_Final = row.split('?')[11]
-        if ObservationID_Final in ObservationID_Delete or ObservationComments_Final == 'null':
+        if ObservationComments_Final == 'null':
             Delete = "Yes"
         ObservationDate = row.split('?')[12]
+        if ActorType_Final == 'None' and PostureType_Final == 'None' and ObservationDevices_Final == 'None':
+            Delete = "Yes"
         DaySplit = ObservationDate.split(' ')[0]
         my_dict = {"ObservationPeriod": ObservationPeriod_Final, "ObservationTimestamp": ObservationTimeStamp_Final,
                    "PinID": PinID_Final, "PinType": PinType_Final, "X": Xrow_Final, "Y": Yrow_Final,
